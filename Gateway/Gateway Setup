@@ -1,0 +1,36 @@
+# CSE 468 - Project 1
+# Gateway VM Setup Commands
+
+# Check available network interfaces (should see enp0s3, enp0s8, enp0s9)
+ip addr show
+
+# Assign static IP to the client-net interface (enp0s3)
+sudo ip addr add 192.168.0.100/24 dev enp0s3
+sudo ip link set enp0s3 up
+
+# Assign static IP to the server-net interface (enp0s8)
+sudo ip addr add 10.0.0.100/8 dev enp0s8
+sudo ip link set enp0s8 up
+
+# Get DHCP address on the NatNetwork interface (enp0s9)
+sudo dhclient enp0s9
+
+# Verify IP and routing configuration
+ip addr show
+ip route
+
+# Make the configuration permanent with netplan
+# Use the yaml file gateway-netcfg.yaml
+sudo netplan apply
+
+# Set up NAT so Client and Server can reach the internet
+sudo iptables -t nat -A POSTROUTING -o enp0s9 -j MASQUERADE
+
+# Enable IP forwarding
+sudo sysctl -w net.ipv4.ip_forward=1
+
+# Make IP forwarding permanent by uncommenting net.ipv4.ip_forward=1 in /etc/sysctl.conf
+# Screenshots in document
+
+# Verify connectivity
+ping google.com       # Ping the internet from Gateway

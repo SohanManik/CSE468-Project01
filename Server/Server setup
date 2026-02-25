@@ -1,0 +1,24 @@
+# CSE 468 - Project 1
+# Server VM Setup Commands
+
+# Check available network interfaces
+ip addr show
+
+# Assign static IP address to the server interface
+sudo ip addr add 10.0.0.10/8 dev enp0s3
+sudo ip link set enp0s3 up
+
+# Add default gateway (points to Gateway VM's server-side interface)
+sudo ip route add default via 10.0.0.100
+
+# Verify IP and routing configuration
+ip addr show
+ip route
+
+# Make the configuration permanent with netplan
+# Use the yaml file server-netcfg.yaml
+sudo netplan apply
+
+# Verify connectivity (run after Gateway is fully configured)
+ping 10.0.0.100       # Ping the Gateway
+ping google.com       # Ping the internet
