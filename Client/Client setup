@@ -15,8 +15,10 @@ sudo ip route add default via 192.168.0.100
 ip addr show
 ip route
 
-# Make the configuration permanent with netplan
-# Use the yaml file client-netcfg.yaml
+# Open the netplan config file and paste the contents from client-netcfg.yaml
+sudo nano /etc/netplan/01-netcfg.yaml
+
+# After saving the file, apply the configuration
 sudo netplan apply
 
 # Verify connectivity (run after Gateway is fully configured)
