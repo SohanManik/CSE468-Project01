@@ -22,5 +22,5 @@ sudo nano /etc/netplan/01-netcfg.yaml
 sudo netplan apply
 
 # Verify connectivity (run after Gateway is fully configured)
-ping 192.168.0.100    # Ping the Gateway
-ping google.com       # Ping the internet
+ping 192.168.0.100   
+ping google.com     
